@@ -1,25 +1,17 @@
-import sys
+import numpy as np
+def extract(input_file):
+	with open(input_file,'r') as ifs:
+		a = ifs.read()
 
-if len(sys.argv) < 3:
-	print("Specify tmd5 file and output file")
-	sys.exit()
+	b = a.split("\n\n")
 
-
-with open(sys.argv[1],'r') as ifs:
-	a = ifs.read()
-
-b = a.split("\n\n")
-
-pts = []
-for i in range(1,len(b)):
-	c = b[i].split("\n")
-	pts.append((c[0],c[1]))
+	pts = []
+	for i in range(1,len(b)):
+		c = b[i].split("\n")
+		pts.append([float(c[0]),float(c[1])])
 
 
-c = b[0].split("\n")
-pts.append((c[2],c[3]))
+	c = b[0].split("\n")
+	pts.append([float(c[2]),float(c[3])])
 
-with open(sys.argv[2],"w") as ofs:
-	for c in pts:
-		ofs.write("{} {}\n".format(c[0],c[1]))
-
+	return np.array(pts)
